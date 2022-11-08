@@ -15,10 +15,18 @@
   align-items: center;
 }
 
-.navigation__login-button{
+.navigation__register-button:hover {
+  text-decoration: underline;
+}
+
+.navigation__login-button {
   color: #FFF;
   text-decoration: none;
   background-color: #000;
   border-radius: 3px;
   padding: 8px 20px;
+}
+
+.navigation__login-button:hover {
+  text-decoration: underline;
 }

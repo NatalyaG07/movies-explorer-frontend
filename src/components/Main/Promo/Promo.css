@@ -1,0 +1,28 @@
+.promo{
+  background-color: #F3C1F8;
+  display: flex;
+  flex-direction: column;
+  padding: 50px 70px 60px;
+  gap: 102px;
+}
+
+.promo__title{
+  max-width: 626px;
+  margin: 0;
+  padding: 0;
+  align-self: flex-start;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 52px;
+  letter-spacing: -0.04em;
+
+}
+
+.promo__image{
+  width: 722px;
+  height: 244px;
+  align-self: flex-end;
+  background-image: url(../../../images/promo-img.svg);
+}
