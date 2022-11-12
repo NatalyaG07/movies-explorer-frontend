@@ -4,3 +4,7 @@
   padding: 18px 70px;
   background-color: #F3C1F8;
 }
+
+.Header_isLoggedIn {
+  background-color: #FFF;;
+}

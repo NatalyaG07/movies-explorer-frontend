@@ -4,6 +4,11 @@
   align-items: center;
 }
 
+.navigation_is-logged-in {
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
 .navigation__register-button{
   color: inherit;
   text-decoration: none;
@@ -15,10 +20,6 @@
   align-items: center;
 }
 
-.navigation__register-button:hover {
-  text-decoration: underline;
-}
-
 .navigation__login-button {
   color: #FFF;
   text-decoration: none;
@@ -27,6 +28,48 @@
   padding: 8px 20px;
 }
 
-.navigation__login-button:hover {
+.navigation__films-button {
+  margin-left: 44px;
+  color: #000;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.navigation__save-films-button {
+  margin-left: 16px;
+  color: #000;
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.navigation__button_hover:hover {
   text-decoration: underline;
+}
+
+.navigation__profile-group {
+  display: flex;
+  align-items: center;
+  gap: 33px;
+}
+
+.navigation__profile-button {
+  color: #000;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.navigation__icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  width: 30px;
+  background: #F9F9F9;
+  border-radius: 6px;
 }

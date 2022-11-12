@@ -1,23 +1,36 @@
-import './Navigation.css';
-import { Link } from 'react-router-dom';
+import "./Navigation.css";
+import { Link } from "react-router-dom";
 
-function Navigation() {
+import icon from "../../images/navigation__icon.svg";
+
+function Navigation({ isLoggedIn }) {
 
   return(
-    <nav className="navigation">
-      <Link className='navigation__register-button' to="/signup">Регистрация</Link>
-      <Link className='navigation__login-button' to="/signin">Войти</Link>
-    </nav>
-  );
-        // <>
-        //     <nav className="navigation navigation_logged">
-        //         <Link className='navigation__link navigation__link_logged' to="/movies">Фильмы</Link>
-        //         <Link className='navigation__link navigation__link_logged' to="/saved-movies">Сохраненные фильмы</Link>
-        //         <Link className='navigation__link navigation__link_logged navigation__link_profile' to="/profile">Аккаунт</Link>
-        //         <button className="navigation__menu" onClick={toggleNavTab} type="button"></button>
-        //     </nav>
+    <>
+      {isLoggedIn ? (
+        <nav className="navigation navigation_is-logged-in">
+          <div className="navigation__films-group">
+            <Link className="navigation__films-button navigation__button_hover" to="/movies">Фильмы</Link>
+            <Link className="navigation__save-films-button navigation__button_hover" to="/saved-movies">Сохраненные фильмы</Link>
+          </div>
 
-        // </>;
+          <div className="navigation__profile-group">
+            <Link className="navigation__profile-button navigation__button_hover" to="/profile">Аккаунт</Link>
+            <div className="navigation__icon">
+              <img className="navigatiom__img" src={icon} alt="Иконка профиля"></img>
+            </div>
+          </div>
+          {/* <button className="navigation__menu" onClick={toggleNavTab} type="button"></button> */}
+        </nav>
+      ) : (
+      <nav className="navigation">
+        <Link className="navigation__register-button navigation__button_hover" to="/signup">Регистрация</Link>
+        <Link className="navigation__login-button navigation__button_hover" to="/signin">Войти</Link>
+      </nav>
+      )
+    } 
+  </>
+  )
 }
 
 export default Navigation;

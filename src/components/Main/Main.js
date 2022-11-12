@@ -7,7 +7,7 @@ import Portfolio from './Portfolio/Portfolio';
 
 function Main() {
   return(
-    <main className="Main">
+    <main className="main">
         <Promo />
         <AboutProject />
         <Techs />
