@@ -8,6 +8,7 @@ import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
+import Profile from "../Profile/Profile";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -31,6 +32,10 @@ function App() {
 
         <Route path="/saved-movies">
           <SavedMovies />
+        </Route>
+
+        <Route path="/profile">
+          <Profile />
         </Route>
 
       </Switch>
