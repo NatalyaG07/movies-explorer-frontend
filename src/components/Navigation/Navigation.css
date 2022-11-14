@@ -73,3 +73,35 @@
   background: #F9F9F9;
   border-radius: 6px;
 }
+
+.navigation__hamburger-menu {
+  display: none;
+  height: 44px;
+  width: 44px;
+  border: 0;
+  background-image: url("../../images/navigation__hamburger-menu.svg");
+  /* background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat; */
+  background-color: #FFF;
+  
+}
+
+@media screen and (max-width: 769px) {
+
+  .navigation__hamburger-menu {
+    display: inline-block;
+  }
+
+  .navigation__films-group {
+    display: none;
+  }
+
+  .navigation__profile-group {
+    display: none;
+  }
+
+  .navigation_is-logged-in {
+    justify-content: flex-end;
+  }
+}
