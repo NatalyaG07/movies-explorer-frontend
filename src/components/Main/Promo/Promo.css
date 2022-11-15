@@ -4,6 +4,7 @@
   flex-direction: column;
   padding: 50px 70px 60px;
   gap: 102px;
+  overflow: hidden;
 }
 
 .promo__title{
@@ -25,4 +26,43 @@
   height: 244px;
   align-self: flex-end;
   background-image: url(../../../images/promo-img.svg);
+  background-size: cover;
+}
+
+@media screen and (max-width: 810px) {
+  .promo{
+    padding: 300px 44px 70px;
+    gap: 140px;
+    justify-content: center;
+  }
+
+  .promo__title{
+    max-width: 705px;
+    text-align: center;
+  }
+
+  .promo__image{
+    max-width: 680px;
+    height: 230px;
+    align-self: center;
+  }
+}
+
+@media screen and (max-width: 730px) {
+  .promo{
+    padding: 183px 10px 40px;
+    gap: 60px;
+  }
+
+  .promo__title{
+    font-weight: 400;
+    font-size: 31px;
+    line-height: 39px;
+  }
+
+  .promo__image{
+    max-width: 680px;
+    height: 230px;
+    align-self: center;
+  }
 }

@@ -59,3 +59,50 @@
   font-weight: 500;
   line-height: 17px;
 }
+
+@media screen and (max-width: 769px) {
+  .about-project {
+    margin: 90px 50px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .about-project {
+    margin: 70px 18px;
+  }
+
+  .about-project__subtitle {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  .about-project__info {
+    font-size: 11px;
+    line-height: 16px;
+    margin-top: 16px;
+  }
+
+  .time {
+    grid-template-columns: 2fr 4fr;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .about-project__texts {
+    flex-direction: column;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    gap: 56px;
+  }
+
+  .time__line {
+    font-size: 11px;
+    line-height: 13px;
+  }
+
+  .time__info {
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+  }
+}

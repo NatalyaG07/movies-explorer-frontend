@@ -12,3 +12,24 @@
   font-size: 24px;
   line-height: 29px;
 }
+
+@media screen and (max-width: 800px) {
+
+  .form-header {
+    padding-top: 232px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+
+  .form-header {
+    width: 260px;
+    padding-top: 56px;
+    padding-bottom: 80px;
+  }
+
+  .form-header__title {
+    margin-top: 50px;
+    text-align: center;
+  }
+}

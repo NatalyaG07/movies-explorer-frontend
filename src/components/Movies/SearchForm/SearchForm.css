@@ -83,3 +83,28 @@
 .search-form__button:hover {
   cursor: pointer;
 }
+
+@media screen and (max-width: 800px) {
+
+  .search-form {
+    padding: 78px 30px 62px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+
+  .search-form__group_icon::before {
+    display: none;
+  }
+
+  .search-form__input {
+    padding-left: 0;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: start;
+  }
+
+  .search-form__button {
+    height: 34px;
+  }
+}

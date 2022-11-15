@@ -10,7 +10,6 @@
 }
 
 .navigation__register-button{
-  color: inherit;
   text-decoration: none;
   font-size: 12px;
   font-weight: 500;
@@ -80,14 +79,11 @@
   width: 44px;
   border: 0;
   background-image: url("../../images/navigation__hamburger-menu.svg");
-  /* background-position: center;
-  background-size: contain;
-  background-repeat: no-repeat; */
   background-color: #FFF;
   
 }
 
-@media screen and (max-width: 769px) {
+@media screen and (max-width: 800px) {
 
   .navigation__hamburger-menu {
     display: inline-block;
@@ -103,5 +99,18 @@
 
   .navigation_is-logged-in {
     justify-content: flex-end;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .navigation__register-button {
+    font-size: 10px;
+  }
+
+  .navigation__login-button {
+    padding: 5px 12px;
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 16px;
   }
 }

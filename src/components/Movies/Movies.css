@@ -27,3 +27,11 @@
 .movies__button:hover {
   background-color: #E8E8E8;
 }
+
+@media screen and (max-width: 800px) {
+
+  .movies__button-box {
+    padding: 50px 10px 80px;
+  }
+
+}

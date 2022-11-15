@@ -6,4 +6,31 @@
   grid-template-columns: repeat(auto-fill, minmax(364px, 1fr));
   grid-column-gap: 24px;
   grid-row-gap: 37px;
+  justify-items: center;
+}
+
+@media screen and (max-width: 908px) {
+  
+  .movies-card-list {
+    grid-template-columns: repeat(auto-fill, minmax(339px, 1fr));
+    padding: 70px 30px 30px;
+    grid-column-gap: 30px;
+    grid-row-gap: 30px;
+  }
+}
+
+@media screen and (max-width: 784px) {
+
+  .movies-card-list {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
+@media screen and (max-width: 706px) {
+
+  .movies-card-list {
+    padding: 40px 10px 26px;
+    grid-column-gap: 15px;
+    grid-row-gap: 14px;
+  }
 }

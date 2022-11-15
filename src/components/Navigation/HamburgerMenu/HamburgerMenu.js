@@ -5,10 +5,6 @@ import icon from "../../../images/navigation__icon.svg";
 
 function HamburgerMenu({ isOpen, toggleHamburger }) {
 
-  // function makeLinkActive({isActive}) {
-  //     return isActive ? 'navtab__link navtab__link_active' : 'navtab__link';
-  // }
-
   return (
     <>
       { isOpen && (

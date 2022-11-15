@@ -1,12 +1,14 @@
 .form {
   display: flex;
   flex-direction: column;
+  height: 378px;
+  justify-content: flex-start;
 }
 
 .form__button {
   width: 396px;
   height: 45px;
-  margin-top: 69px;
+  margin-top: auto;
   background: #000;
   border-radius: 3px;
   cursor: pointer;
@@ -46,4 +48,22 @@
 
 .form-content__link:hover {
   text-decoration: underline;
+}
+
+@media screen and (max-width: 500px) {
+
+  .form {
+    height: 453px;
+  }
+
+  .form__button {
+    width: 260px;
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .form-content__navigation{
+    font-size: 12px;
+    line-height: 15px;
+  }
 }

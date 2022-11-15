@@ -14,7 +14,7 @@ import Login from "../Login/Login";
 import Page404 from "../Page404/Page404";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   // function toggleIsLoggedIn() {
   //   setIsLoggedIn(isLoggedIn => !isLoggedIn);

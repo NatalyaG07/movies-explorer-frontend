@@ -43,3 +43,40 @@
 .portfolio__arrow {
   width: 29px;
 }
+
+@media screen and (max-width: 769px) {
+
+  .portfolio {
+    padding: 0 50px 90px;
+  }
+
+  .portfolio__paragraph {
+    font-size: 28px;
+  }
+
+  .portfolio__arrow {
+    width: 25px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+
+  .portfolio {
+    padding: 0 14px 70px;
+  }
+
+  
+.portfolio__title {
+  margin-bottom: 40px;
+  font-size: 14px;
+}
+
+.portfolio__paragraph {
+  font-size: 18px;
+  line-height: 28px;
+  }
+
+  .portfolio__arrow {
+    width: 15px;
+  }
+}

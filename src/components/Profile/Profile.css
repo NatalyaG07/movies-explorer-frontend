@@ -78,3 +78,41 @@
 .profile__link:hover {
   text-decoration: underline;
 }
+
+@media screen and (max-width: 800px) {
+
+  .profile {
+    margin-top: 236px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+
+  .profile {
+    margin-top: 70px;
+  }
+
+  .profile__title {
+    margin: 0 0 80px;
+  }
+
+  .profile__label {
+    width: 260px;
+  }
+
+  .profile__buttons {
+    margin-top: 379px;
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .profile__button {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .profile__link {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}

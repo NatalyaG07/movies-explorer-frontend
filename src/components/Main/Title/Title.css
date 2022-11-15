@@ -8,3 +8,12 @@
   border-bottom: 1px solid black;
   padding-bottom: 23px;
 }
+
+@media screen and (max-width: 600px) {
+
+  .title {
+    font-size: 18px;
+    line-height: 22px;
+    padding-bottom: 28px;
+  }
+}

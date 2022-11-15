@@ -37,3 +37,10 @@
   line-height: 12px;
   color: #FF4062;
 }
+
+@media screen and (max-width: 500px) {
+
+  .register__input {
+    width: 260px;
+  }
+}

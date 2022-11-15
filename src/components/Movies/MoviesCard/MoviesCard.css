@@ -75,3 +75,36 @@
 .movies-card__group:hover > .movies-card__like_remove { 
   opacity: 1;
 }
+
+@media screen and (max-width: 908px) {
+
+  .movies-card {
+    max-width: 339px;
+  }
+
+  .movies-card__img {
+    border-radius: 6px 6px 0 0;
+    min-height: 190px;
+    max-height: 190px;
+  }
+
+  .movies-card__title {
+    margin-bottom: 15px;
+  }
+
+  .movies-card__info {
+    padding: 14px;
+  }
+}
+
+@media screen and (max-width: 784px) {
+
+  .movies-card {
+    max-width: 300px;
+  }
+
+  .movies-card__img {
+    min-height: 168x;
+    max-height: 168px;
+  }
+}
