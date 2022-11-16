@@ -23,8 +23,6 @@ function App() {
   return (
     <div className="App">
 
-
-
       <Switch>
         <Route  exact path="/">
           <Header isLoggedIn={isLoggedIn} />
