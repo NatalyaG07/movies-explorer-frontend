@@ -1,0 +1,37 @@
+.movies {
+  flex: 1;
+}
+
+.movies__button-box {
+  padding: 50px 70px 80px;
+}
+
+.movies__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border: 0;
+  border-radius: 6px;
+  padding: 11px 0 9px;
+  text-align: center;
+  background-color: #F9F9F9;
+  width: 100%;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.movies__button:hover {
+  background-color: #E8E8E8;
+}
+
+@media screen and (max-width: 800px) {
+
+  .movies__button-box {
+    padding: 50px 10px 80px;
+  }
+
+}
