@@ -1,21 +1,47 @@
 import "./SearchForm.css";
+import {useState} from "react";
+
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
-function SearchForm() {
+function SearchForm( {handleSearchFilms, keyWord, setKeyWord} ) {
 
-  function handleSubmit(e) {
+  // const [keyWord, setKeyWord] = useState('');
+  const [error, setError] = useState('');
+
+  function handleChangeKeyWord(e) {
+    setKeyWord(e.target.value);
+  }
+
+  function handleSearch(e) {
     e.preventDefault();
-    console.log('click search');
+    console.log("click search");
+
+    if (keyWord === '') {
+      setError("Нужно ввести ключевое слово");
+    } else {
+      setError('');
+      handleSearchFilms();
+    }
   }
 
   return (
     <div className="search-form">
-      <form className="search-form__form" onSubmit={handleSubmit}>
+      <form className="search-form__form" onSubmit={handleSearch} noValidate autoComplete="off">
         <fieldset className="search-form__group  search-form__group_icon">
-          <input className="search-form__input" placeholder="Фильм" type="search"required/>
+          <input
+          className="search-form__input" 
+          placeholder="Фильм" 
+          type="search"
+          required
+          value={keyWord || ''}
+          onChange={handleChangeKeyWord}
+          />
+
           <button className="search-form__button" type="submit">Найти</button>
         </fieldset>
       </form>
+
+      <p className="search-form__input-error">{error}</p>
       
       <FilterCheckbox />
     </div>

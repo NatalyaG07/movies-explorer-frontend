@@ -1,7 +1,7 @@
 import React from "react";
 import "./MoviesCard.css";
 
-function MoviesCard({ nameRU, duration, image, isSaved, type }) {
+function MoviesCard({ movie, nameRU, duration, image, isSaved, type }) {
 
   return(
     <article className="movies-card">
