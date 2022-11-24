@@ -7,6 +7,10 @@
 }
 
 .movies__button {
+  display: none;
+}
+
+.movies__button_active {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -24,7 +28,7 @@
   line-height: 15px;
 }
 
-.movies__button:hover {
+.movies__button_active:hover {
   background-color: #E8E8E8;
 }
 
