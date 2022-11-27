@@ -31,7 +31,7 @@
 .register__error {
   height: 10px;
   margin-bottom: 5px;
-  margin-left: 15px;
+  text-align: center;
   font-weight: 400;
   font-size: 10px;
   line-height: 12px;
@@ -42,5 +42,10 @@
 
   .register__input {
     width: 260px;
+  }
+
+  .register__error {
+    width: 260px;
+    font-size: 8px;
   }
 }

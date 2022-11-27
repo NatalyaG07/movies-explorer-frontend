@@ -5,7 +5,6 @@ import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
 function SearchForm( {handleSearchFilms, keyWord, setKeyWord} ) {
 
-  // const [keyWord, setKeyWord] = useState('');
   const [error, setError] = useState('');
 
   function handleChangeKeyWord(e) {
@@ -14,7 +13,6 @@ function SearchForm( {handleSearchFilms, keyWord, setKeyWord} ) {
 
   function handleSearch(e) {
     e.preventDefault();
-    console.log("click search");
 
     if (keyWord === '') {
       setError("Нужно ввести ключевое слово");
