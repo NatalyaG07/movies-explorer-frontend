@@ -9,7 +9,6 @@ export const register = (name, email, password) => {
     body: JSON.stringify({name, email, password})
   })
   .then((response) => {
-    console.log(response);
       if (response.status === 200){
         return response.json();
       }
@@ -47,3 +46,40 @@ export const checkToken = (token) => {
   .then(res => res.json())
   .then(data => data)
 }
+
+export const getUserInfo = (token) => { 
+  return fetch(`${BASE_URL}/users/me`, { 
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    }
+  })
+  .then((response) => {
+    if (response.status === 200){
+      return response.json();
+    }
+    return Promise.reject(`Ошибка: ${response.status}`);
+})
+};
+
+export const editProfile = (data, token) => {
+  return fetch(`${BASE_URL}/users/me`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+        name: data.name,
+        email: data.email,
+      })
+  })
+
+  .then((response) => {
+    if (response.status === 200){
+      return response.json();
+    }
+    return Promise.reject(`Ошибка: ${response.status}`);
+ })
+};

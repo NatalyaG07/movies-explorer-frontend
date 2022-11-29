@@ -9,7 +9,7 @@ import Form from "../Form/Form";
 import FormValidation from "../../utils/FormValidation";
 import * as MainApi from '../../utils/MainApi';
 
-function Register() {
+function Register({ handleLogin }) {
 
   const [submitError, setSubmitError] = useState(false);
 
@@ -27,6 +27,7 @@ function Register() {
     .then((res) => {
       if(res) {
         setSubmitError(false);
+        handleLogin();
         history.push("/movies");
       }
     })
