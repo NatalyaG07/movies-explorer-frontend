@@ -2,9 +2,8 @@ import React from 'react';
 import "./MoviesCardList.css";
 
 import MoviesCard from "../MoviesCard/MoviesCard";
-import { savedMovies } from "../../../utils/const";
 
-function MoviesCardList({ type, movies }) {
+function MoviesCardList({ type, movies, handleAddSavedMovies, handleRemoveSavedMovies, savedMovies, setSavedMoviesRender }) {
 
   function transformationDuration(duration) {
     const hours = Math.floor(duration / 60);
@@ -37,38 +36,30 @@ function MoviesCardList({ type, movies }) {
             nameRU={movie.nameRU} 
             duration={transformationDuration(movie.duration)}
             image={`https://api.nomoreparties.co${movie.image.url}`}
-            isSaved={movie.isSaved}
             type={type}
+            handleAddSavedMovies={handleAddSavedMovies}
+            handleRemoveSavedMovies={handleRemoveSavedMovies}
+            savedMovies={savedMovies}
             />
           );
         })}
 
-        {type === "saved-movies" && savedMovies.map((movie) =>  {
+        {type === "saved-movies" && movies.map((movie) =>  {
           return (
             <MoviesCard
-            key={movie._id} 
+            key={movie._id}
+            movieId={movie._id}
+            movie={movie}
             nameRU={movie.nameRU} 
-            duration={movie.duration} 
+            duration={transformationDuration(movie.duration)}
             image={movie.image}
-            isSaved={movie.isSaved}
             type={type}
+            handleAddSavedMovies={handleAddSavedMovies}
+            handleRemoveSavedMovies={handleRemoveSavedMovies}
+            setSavedMoviesRender={setSavedMoviesRender}
             />
           );
         })}
-
-        
-        {/* {movies?.map((movie) =>  {
-          return (
-            <MoviesCard
-            key={movie._id} 
-            nameRU={movie.nameRU} 
-            duration={movie.duration} 
-            image={movie.image}
-            isSaved={movie.isSaved}
-            type={type}
-            />
-          );
-        })} */}
       </ul>
   )
 }

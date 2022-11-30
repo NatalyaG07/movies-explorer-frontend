@@ -20,6 +20,9 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [submitProfileError, setSubmitProfileError] = useState(false);
+  // const [moviesToShow, setMoviesToShow] = useState([]);
+  const [savedMovies, setSavedMovies] = useState([]);
+  // const [likeActive, setlikeActive] = useState(false);
 
   const history = useHistory();
   const token = localStorage.getItem('jwt');
@@ -29,8 +32,6 @@ function App() {
   }, [history, isLoggedIn]);
 
   useEffect(() => {
-    // const token = localStorage.getItem('jwt');
-
     if(token) {
       MainApi
       .getUserInfo(token)
@@ -43,11 +44,9 @@ function App() {
 
   function toggleIsLoggedIn() {
     setIsLoggedIn(isLoggedIn => !isLoggedIn);
-  }
+  };
 
   function checkToken() {
-    // const jwt = localStorage.getItem('jwt');
-  // const token = localStorage.getItem('jwt');
     if(token) {
       MainApi.checkToken(token).then((res) => {
         if(res) {
@@ -77,9 +76,31 @@ function App() {
         setSubmitProfileError(true);
         console.log(err);
       });
-  }
-  
+  };
 
+  function handleAddSavedMovies(movie) {
+    MainApi
+      .addSavedMovies(movie, token)
+      .then((newSavedMovies) => {
+        console.log(newSavedMovies.data);
+        setSavedMovies([newSavedMovies.data, ...savedMovies]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  function handleRemoveSavedMovies(movie) {
+    MainApi
+      .removeSavedMovies(movie._id, token)
+      .then(() => {
+        setSavedMovies((savedMovies) => savedMovies.filter((m) => m.movieId !== movie.id));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  
   return (
 
     <CurrentUserContext.Provider value={currentUser}>
@@ -102,13 +123,22 @@ function App() {
   
           <Route path="/movies">
             <Header isLoggedIn={isLoggedIn} />
-            <Movies />
+            <Movies handleAddSavedMovies={handleAddSavedMovies}
+            handleRemoveSavedMovies={handleRemoveSavedMovies}
+            savedMovies={savedMovies}
+            />
             <Footer />
           </Route>
   
           <Route path="/saved-movies">
             <Header isLoggedIn={isLoggedIn} />
-            <SavedMovies />
+            <SavedMovies 
+            token={token} 
+            setSavedMovies={setSavedMovies} 
+            savedMovies={savedMovies} 
+            handleAddSavedMovies={handleAddSavedMovies} 
+            handleRemoveSavedMovies={handleRemoveSavedMovies}
+            />
             <Footer />
           </Route>
   

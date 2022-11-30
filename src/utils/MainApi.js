@@ -75,7 +75,68 @@ export const editProfile = (data, token) => {
         email: data.email,
       })
   })
+  .then((response) => {
+    if (response.status === 200){
+      return response.json();
+    }
+    return Promise.reject(`Ошибка: ${response.status}`);
+ })
+};
 
+export const getSavedMovies = (token) => {
+  return fetch(`${BASE_URL}/movies`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    }
+  })
+  .then((response) => {
+    if (response.status === 200){
+      return response.json();
+    }
+    return Promise.reject(`Ошибка: ${response.status}`);
+ })
+};
+
+export const addSavedMovies = (movie, token) => {
+  return fetch(`${BASE_URL}/movies`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      country: movie.country,
+      director: movie.director,
+      duration: movie.duration,
+      year: movie.year,
+      description: movie.description,
+      image: `https://api.nomoreparties.co${movie.image.url}`,
+      trailerLink: movie.trailerLink,
+      thumbnail: `https://api.nomoreparties.co${movie.image.url}`,
+      movieId: movie.id,
+      nameRU: movie.nameRU,
+      nameEN: movie.nameEN,
+    })
+  })
+  .then((response) => {
+    if (response.status === 200){
+      return response.json();
+    }
+    return Promise.reject(`Ошибка: ${response.status}`);
+ })
+};
+
+
+export const removeSavedMovies = (movieId, token) => {
+  return fetch(`${BASE_URL}/movies/${movieId}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    }
+  })
   .then((response) => {
     if (response.status === 200){
       return response.json();

@@ -1,4 +1,4 @@
-import './Movies.css';
+import "./Movies.css";
 import {useState, useEffect} from "react";
 
 import { moviesApi } from "../../utils/MoviesApi";
@@ -7,7 +7,7 @@ import MoviesCardList from "./MoviesCardList/MoviesCardList";
 import SearchForm from "./SearchForm/SearchForm";
 import Preloader from "./Preloader/Preloader";
 
-function Movies() {
+function Movies({ handleAddSavedMovies, handleRemoveSavedMovies, savedMovies }) {
 
   const [movies, setMovies] = useState([]);
   const [keyWord, setKeyWord] = useState('');
@@ -27,10 +27,9 @@ function Movies() {
     );
 
     if(filteredMovie.length === 0) {
-      setSearchMessage('Ничего не найдено');
+      setSearchMessage("Ничего не найдено");
     }
     setMovies(filteredMovie);
-    console.log(filteredMovie);
   }
 
   function handleSearchFilms() {
@@ -44,7 +43,7 @@ function Movies() {
       setOnPreloader(false);
     })
     .catch((err) => {
-      setSearchMessage('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз');
+      setSearchMessage("Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз");
     });
   }
 
@@ -81,7 +80,11 @@ function Movies() {
 
         {moviesToShow.length > 0 &&  !onPreloader ? (
           <>
-            <MoviesCardList type="all-movies" movies={moviesToShow} />
+            <MoviesCardList type="all-movies" 
+            movies={moviesToShow} 
+            handleAddSavedMovies={handleAddSavedMovies} 
+            handleRemoveSavedMovies={handleRemoveSavedMovies}
+            savedMovies={savedMovies}/>
 
             <div className="movies__button-box">
               <button 
