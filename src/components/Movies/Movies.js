@@ -32,10 +32,12 @@ function Movies({ handleAddSavedMovies, handleRemoveSavedMovies, savedMovies }) 
       movie.nameRU.toLowerCase().includes(keyWord.toLowerCase())
     );
 
-    if(filteredMovie.length === 0) {
+    if(filteredMovie.length === 0 && isSelectedShortMovie) {
       setSearchMessage("Ничего не найдено");
     }
     setMovies(filteredMovie);
+    localStorage.setItem("filteredMovie", JSON.stringify(filteredMovie));
+    localStorage.setItem("keyWord", JSON.stringify(keyWord));
   }
 
   function handleSearchFilms() {
@@ -78,7 +80,7 @@ function Movies({ handleAddSavedMovies, handleRemoveSavedMovies, savedMovies }) 
     const filteredMovie = movies.filter((movie) =>
     movie.duration <= 40);
 
-    if(filteredMovie.length === 0) {
+    if(filteredMovie.length === 0 && isSelectedShortMovie) {
       setSearchMessage("Ничего не найдено");
     }
     setMoviesToShow(filteredMovie);
@@ -88,9 +90,16 @@ function Movies({ handleAddSavedMovies, handleRemoveSavedMovies, savedMovies }) 
     if(isSelectedShortMovie) {
       filterCheckboxMovies()
     } else {
-      filterMovies(movies);
+      setMoviesToShow(movies);
     }
   }, [isSelectedShortMovie]);
+
+  useEffect(() => {
+    if(localStorage.getItem("filteredMovie")) {
+      setMovies(JSON.parse(localStorage.filteredMovie));
+      setKeyWord(JSON.parse(localStorage.keyWord));
+    }
+  }, []);
 
   return(
     <main className="movies">
@@ -115,8 +124,8 @@ function Movies({ handleAddSavedMovies, handleRemoveSavedMovies, savedMovies }) 
 
             <div className="movies__button-box">
               <button 
-              className={`movies__button ${moviesToShow.length < movies.length && "movies__button_active"}`} 
-              type="button" 
+              className={`movies__button ${moviesToShow.length < movies.length && !isSelectedShortMovie ? ("movies__button_active") : ("") }`}
+              type="button"
               onClick={handleShowMoreMovies}>
                 Ещё
               </button>

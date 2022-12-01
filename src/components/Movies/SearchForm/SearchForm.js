@@ -3,7 +3,13 @@ import {useState} from "react";
 
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
-function SearchForm( {handleSearchFilms, keyWord, setKeyWord, filterCheckboxMovies, onSelectShortMovie, isSelectedShortMovie} ) {
+function SearchForm({
+  handleSearchFilms, 
+  keyWord, 
+  setKeyWord, 
+  filterCheckboxMovies, 
+  onSelectShortMovie, 
+  isSelectedShortMovie }) {
 
   const [error, setError] = useState('');
 

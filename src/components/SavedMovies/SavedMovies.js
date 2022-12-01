@@ -7,7 +7,12 @@ import SearchForm from "../Movies/SearchForm/SearchForm";
 
 import * as MainApi from "../../utils/MainApi";
 
-function SavedMovies({ token, setSavedMovies, savedMovies, handleAddSavedMovies, handleRemoveSavedMovies }) {
+function SavedMovies({ 
+  token, 
+  setSavedMovies, 
+  savedMovies, 
+  handleAddSavedMovies, 
+  handleRemoveSavedMovies }) {
 
   const [savedMoviesRender, setSavedMoviesRender] = useState(0);
   const [keyWord, setKeyWord] = useState('');

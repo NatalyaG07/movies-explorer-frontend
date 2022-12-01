@@ -2,7 +2,16 @@ import "./MoviesCard.css";
 
 import { useState } from "react";
 
-function MoviesCard({ movie, nameRU, duration, image, type, handleAddSavedMovies, handleRemoveSavedMovies, savedMovies, setSavedMoviesRender }) {
+function MoviesCard({ 
+  movie, 
+  nameRU, 
+  duration, 
+  image, 
+  type, 
+  handleAddSavedMovies, 
+  handleRemoveSavedMovies, 
+  savedMovies, 
+  setSavedMoviesRender }) {
 
   const [likeActive, setlikeActive] = useState(false);
 
@@ -25,7 +34,13 @@ function MoviesCard({ movie, nameRU, duration, image, type, handleAddSavedMovies
 
   return(
     <article className="movies-card">
-      <img className="movies-card__img" src={image} alt={nameRU} />
+      <a 
+      className="movies-card__link" 
+      href={movie.trailerLink}
+      target="blank"
+      rel="noreferrer">
+        <img className="movies-card__img" src={image} alt={nameRU} />
+      </a>
 
       <div className="movies-card__info">
         <div className="movies-card__group">

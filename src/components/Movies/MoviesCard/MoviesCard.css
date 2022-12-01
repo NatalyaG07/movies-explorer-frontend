@@ -77,6 +77,10 @@
   opacity: 1;
 }
 
+.movies-card__link {
+  cursor: pointer;
+}
+
 @media screen and (max-width: 908px) {
 
   .movies-card {

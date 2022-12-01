@@ -12,6 +12,7 @@ import Profile from "../Profile/Profile";
 import Register from "../Register/Register"
 import Login from "../Login/Login";
 import Page404 from "../Page404/Page404";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 import * as MainApi from '../../utils/MainApi';
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
@@ -20,9 +21,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [submitProfileError, setSubmitProfileError] = useState(false);
-  // const [moviesToShow, setMoviesToShow] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
-  // const [likeActive, setlikeActive] = useState(false);
 
   const history = useHistory();
   const token = localStorage.getItem('jwt');
@@ -121,16 +120,20 @@ function App() {
             <Login handleLogin={toggleIsLoggedIn} />
           </Route>
   
-          <Route path="/movies">
+          <ProtectedRoute 
+          path="/movies"
+          isLoggedIn={isLoggedIn}>
             <Header isLoggedIn={isLoggedIn} />
             <Movies handleAddSavedMovies={handleAddSavedMovies}
             handleRemoveSavedMovies={handleRemoveSavedMovies}
             savedMovies={savedMovies}
             />
             <Footer />
-          </Route>
+          </ProtectedRoute>
   
-          <Route path="/saved-movies">
+          <ProtectedRoute 
+          path="/saved-movies"
+          isLoggedIn={isLoggedIn}>
             <Header isLoggedIn={isLoggedIn} />
             <SavedMovies 
             token={token} 
@@ -140,16 +143,18 @@ function App() {
             handleRemoveSavedMovies={handleRemoveSavedMovies}
             />
             <Footer />
-          </Route>
+          </ProtectedRoute>
   
-          <Route path="/profile">
+          <ProtectedRoute 
+          path="/profile"
+          isLoggedIn={isLoggedIn}>
             <Header isLoggedIn={isLoggedIn} />
             <Profile 
             handleLogin={toggleIsLoggedIn} 
             updateUser={handleUpdateUser}
             submitError={submitProfileError}/>
             <Footer />
-          </Route>
+          </ProtectedRoute>
   
           <Route path="*">
             <Page404 />

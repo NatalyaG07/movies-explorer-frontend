@@ -3,7 +3,13 @@ import "./MoviesCardList.css";
 
 import MoviesCard from "../MoviesCard/MoviesCard";
 
-function MoviesCardList({ type, movies, handleAddSavedMovies, handleRemoveSavedMovies, savedMovies, setSavedMoviesRender }) {
+function MoviesCardList({ 
+  type, 
+  movies, 
+  handleAddSavedMovies, 
+  handleRemoveSavedMovies, 
+  savedMovies, 
+  setSavedMoviesRender }) {
 
   function transformationDuration(duration) {
     const hours = Math.floor(duration / 60);

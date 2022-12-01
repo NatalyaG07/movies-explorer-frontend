@@ -24,6 +24,8 @@ function Profile({ handleLogin, updateUser, submitError }) {
 
   function signOut() {
     localStorage.removeItem("jwt");
+    localStorage.removeItem("filteredMovie");
+    localStorage.removeItem("keyWord");
     handleLogin();
   }
 
