@@ -3,7 +3,7 @@ import {useState} from "react";
 
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
-function SearchForm( {handleSearchFilms, keyWord, setKeyWord} ) {
+function SearchForm( {handleSearchFilms, keyWord, setKeyWord, filterCheckboxMovies, onSelectShortMovie, isSelectedShortMovie} ) {
 
   const [error, setError] = useState('');
 
@@ -41,7 +41,10 @@ function SearchForm( {handleSearchFilms, keyWord, setKeyWord} ) {
 
       <p className="search-form__input-error">{error}</p>
       
-      <FilterCheckbox />
+      <FilterCheckbox 
+      filterCheckboxMovies={filterCheckboxMovies} 
+      onSelectShortMovie={onSelectShortMovie}
+      isSelectedShortMovie={isSelectedShortMovie}/>
     </div>
   );
 }

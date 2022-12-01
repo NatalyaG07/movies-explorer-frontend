@@ -1,5 +1,5 @@
 import "./Movies.css";
-import {useState, useEffect} from "react";
+import {useState, useEffect, useCallback} from "react";
 
 import { moviesApi } from "../../utils/MoviesApi";
 
@@ -15,6 +15,12 @@ function Movies({ handleAddSavedMovies, handleRemoveSavedMovies, savedMovies }) 
   const [onPreloader, setOnPreloader] = useState(false);
   const [nextMovies, setNextMovies] = useState(movieCounter());
   const [moviesToShow, setMoviesToShow] = useState([]);
+  const [isSelectedShortMovie, setIsSelectedIsShortMovie] = useState(false);
+
+  const onSelectShortMovie = useCallback(
+    () => setIsSelectedIsShortMovie(!isSelectedShortMovie),
+    [isSelectedShortMovie]
+  );
 
   useEffect(() => {
     setNextMovies(movieCounter());
@@ -68,12 +74,33 @@ function Movies({ handleAddSavedMovies, handleRemoveSavedMovies, savedMovies }) 
     setNextMovies(nextMovies + movieCounter());
   };
 
+  function filterCheckboxMovies() {
+    const filteredMovie = movies.filter((movie) =>
+    movie.duration <= 40);
+
+    if(filteredMovie.length === 0) {
+      setSearchMessage("Ничего не найдено");
+    }
+    setMoviesToShow(filteredMovie);
+  }
+
+  useEffect(() => {
+    if(isSelectedShortMovie) {
+      filterCheckboxMovies()
+    } else {
+      filterMovies(movies);
+    }
+  }, [isSelectedShortMovie]);
+
   return(
     <main className="movies">
         <SearchForm
          handleSearchFilms={handleSearchFilms} 
          keyWord={keyWord} 
          setKeyWord={setKeyWord}
+         filterCheckboxMovies={filterCheckboxMovies}
+         onSelectShortMovie={onSelectShortMovie}
+         isSelectedShortMovie={isSelectedShortMovie}
         />
 
         {onPreloader && <Preloader />}
