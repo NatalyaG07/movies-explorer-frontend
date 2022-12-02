@@ -4,5 +4,5 @@
 
 ## Ссылка на пул реквест: **[пул реквест level-3](https://github.com/NatalyaG07/movies-explorer-frontend/pull/2)**
 
-## Ссылка на фронтенд-часть проекта: **[фронтенд-часть проекта](diploma.natalya.g.nomoredomains.icu)**
+## Ссылка на фронтенд-часть проекта: https://diploma.natalya.g.nomoredomains.icu
 
