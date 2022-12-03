@@ -6,10 +6,9 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 function MoviesCardList({ 
   type, 
   movies, 
-  handleAddSavedMovies, 
   handleRemoveSavedMovies, 
   savedMovies, 
-  setSavedMoviesRender }) {
+  handleLikeButton }) {
 
   function transformationDuration(duration) {
     const hours = Math.floor(duration / 60);
@@ -43,9 +42,9 @@ function MoviesCardList({
             duration={transformationDuration(movie.duration)}
             image={`https://api.nomoreparties.co${movie.image.url}`}
             type={type}
-            handleAddSavedMovies={handleAddSavedMovies}
             handleRemoveSavedMovies={handleRemoveSavedMovies}
             savedMovies={savedMovies}
+            handleLikeButton={handleLikeButton}
             />
           );
         })}
@@ -60,9 +59,8 @@ function MoviesCardList({
             duration={transformationDuration(movie.duration)}
             image={movie.image}
             type={type}
-            handleAddSavedMovies={handleAddSavedMovies}
             handleRemoveSavedMovies={handleRemoveSavedMovies}
-            setSavedMoviesRender={setSavedMoviesRender}
+            savedMovies={savedMovies}
             />
           );
         })}

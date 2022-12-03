@@ -2,11 +2,11 @@
   display: flex;
   justify-content: space-between;
   padding: 18px 70px;
-  background-color: #F3C1F8;
+  background-color: #FFF;;
 }
 
-.Header_isLoggedIn {
-  background-color: #FFF;;
+.Header_isLoggedInMain {
+  background-color: #F3C1F8;
 }
 
 @media screen and (max-width: 800px) {

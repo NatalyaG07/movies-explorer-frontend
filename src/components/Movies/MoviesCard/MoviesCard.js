@@ -1,6 +1,6 @@
 import "./MoviesCard.css";
 
-import { useState } from "react";
+import { useEffect } from "react";
 
 function MoviesCard({ 
   movie, 
@@ -8,28 +8,31 @@ function MoviesCard({
   duration, 
   image, 
   type, 
-  handleAddSavedMovies, 
   handleRemoveSavedMovies, 
   savedMovies, 
-  setSavedMoviesRender }) {
+ handleLikeButton }) {
 
-  const [likeActive, setlikeActive] = useState(false);
+  useEffect(() => {
+      cardLikeButtonClassName();
+  }, []);
 
-  function handleLikeActive() {
-    if(!likeActive) {
-      handleAddSavedMovies(movie);
-      setlikeActive(true);
-    } else {
-      const movieWhisLike = savedMovies.filter((saved) => saved.movieId === movie.id);
+  function cardLikeButtonClassName() {
+    if (type === "all-movies") {
+      const isLikedMovie = savedMovies.find((saved) => saved.movieId === movie.id);
 
-      handleRemoveSavedMovies(movieWhisLike[0]);
-      setlikeActive(false);
+      const cardLikeButtonClassName = (
+        `movies-card__like ${isLikedMovie ? 'movies-card__like_active' : ''}`
+      );
+      return cardLikeButtonClassName;
     }
+  }
+
+  function handleLikeButtonClick() {
+    handleLikeButton(movie);
   }
 
   function removeMovie() {
     handleRemoveSavedMovies(movie);
-    setSavedMoviesRender(m => m + 1);
   }
 
   return(
@@ -54,10 +57,10 @@ function MoviesCard({
 
           {type === "all-movies" && (
           <button 
-          className={`movies-card__like ${likeActive && "movies-card__like_active"}`}
+          className={cardLikeButtonClassName()}
           type="button" 
           aria-label="Лайк"
-          onClick={handleLikeActive}></button>
+          onClick={handleLikeButtonClick}></button>
           )}
         </div>
 

@@ -30,6 +30,19 @@ function App() {
     checkToken();
   }, [history, isLoggedIn]);
 
+    useEffect(() => {
+    if (token) {
+      MainApi
+      .getSavedMovies(token)
+      .then((movies) => {
+          setSavedMovies(movies.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    }
+  }, []);
+
   useEffect(() => {
     if(token) {
       MainApi
@@ -77,12 +90,21 @@ function App() {
       });
   };
 
+  function handleLikeButton(movie) {
+    const isLikedMovie = savedMovies.find((saved) => saved.movieId === movie.id);
+
+    if(isLikedMovie) {
+      handleRemoveSavedMovies(isLikedMovie);
+    } else {
+      handleAddSavedMovies(movie);
+    }
+  }
+
   function handleAddSavedMovies(movie) {
     MainApi
       .addSavedMovies(movie, token)
       .then((newSavedMovies) => {
-        console.log(newSavedMovies.data);
-        setSavedMovies([newSavedMovies.data, ...savedMovies]);
+        setSavedMovies([newSavedMovies.movie, ...savedMovies]);
       })
       .catch((err) => {
         console.log(err);
@@ -93,7 +115,7 @@ function App() {
     MainApi
       .removeSavedMovies(movie._id, token)
       .then(() => {
-        setSavedMovies((savedMovies) => savedMovies.filter((m) => m.movieId !== movie.id));
+        setSavedMovies((savedMovies) => savedMovies.filter((m) => m.movieId !== movie.movieId));
       })
       .catch((err) => {
         console.log(err);
@@ -107,7 +129,7 @@ function App() {
   
         <Switch>
           <Route  exact path="/">
-            <Header isLoggedIn={isLoggedIn} />
+            <Header isLoggedIn={isLoggedIn} type="main"/>
             <Main />
             <Footer />
           </Route>
@@ -124,9 +146,10 @@ function App() {
           path="/movies"
           isLoggedIn={isLoggedIn}>
             <Header isLoggedIn={isLoggedIn} />
-            <Movies handleAddSavedMovies={handleAddSavedMovies}
+            <Movies
             handleRemoveSavedMovies={handleRemoveSavedMovies}
             savedMovies={savedMovies}
+            handleLikeButton={handleLikeButton}
             />
             <Footer />
           </ProtectedRoute>
@@ -136,10 +159,8 @@ function App() {
           isLoggedIn={isLoggedIn}>
             <Header isLoggedIn={isLoggedIn} />
             <SavedMovies 
-            token={token} 
             setSavedMovies={setSavedMovies} 
-            savedMovies={savedMovies} 
-            handleAddSavedMovies={handleAddSavedMovies} 
+            savedMovies={savedMovies}
             handleRemoveSavedMovies={handleRemoveSavedMovies}
             />
             <Footer />

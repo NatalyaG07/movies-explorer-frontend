@@ -7,7 +7,7 @@ import MoviesCardList from "./MoviesCardList/MoviesCardList";
 import SearchForm from "./SearchForm/SearchForm";
 import Preloader from "./Preloader/Preloader";
 
-function Movies({ handleAddSavedMovies, handleRemoveSavedMovies, savedMovies }) {
+function Movies({ handleRemoveSavedMovies, savedMovies, handleLikeButton }) {
 
   const [movies, setMovies] = useState([]);
   const [keyWord, setKeyWord] = useState('');
@@ -21,6 +21,7 @@ function Movies({ handleAddSavedMovies, handleRemoveSavedMovies, savedMovies }) 
     () => setIsSelectedIsShortMovie(!isSelectedShortMovie),
     [isSelectedShortMovie]
   );
+
 
   useEffect(() => {
     setNextMovies(movieCounter());
@@ -117,10 +118,10 @@ function Movies({ handleAddSavedMovies, handleRemoveSavedMovies, savedMovies }) 
         {moviesToShow.length > 0 &&  !onPreloader ? (
           <>
             <MoviesCardList type="all-movies" 
-            movies={moviesToShow} 
-            handleAddSavedMovies={handleAddSavedMovies} 
+            movies={moviesToShow}
             handleRemoveSavedMovies={handleRemoveSavedMovies}
-            savedMovies={savedMovies}/>
+            savedMovies={savedMovies}
+            handleLikeButton={handleLikeButton}/>
 
             <div className="movies__button-box">
               <button 
