@@ -1,17 +1,24 @@
 import './Profile.css';
 
 import React from 'react';
+import { useEffect} from "react";
 import { Link} from "react-router-dom";
 
 
 import FormValidation from "../../utils/FormValidation";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-function Profile({ handleLogin, updateUser, submitError }) {
+function Profile({ 
+  handleLogin, 
+  updateUser, 
+  submitError, 
+  isLoggedIn,
+  submitProfileResOk,
+  setSavedMovies }) {
 
   const FormValidationCallback = FormValidation();
   const { name, email } = FormValidationCallback.values;
-  const { handleChange, errors, isValid, resetForm } = FormValidationCallback;
+  const { handleChange, errors, isValid, resetForm, setValues } = FormValidationCallback;
 
   const currentUser = React.useContext(CurrentUserContext);
 
@@ -23,11 +30,19 @@ function Profile({ handleLogin, updateUser, submitError }) {
   }
 
   function signOut() {
-    localStorage.removeItem("jwt");
-    localStorage.removeItem("filteredMovie");
-    localStorage.removeItem("keyWord");
+    localStorage.clear();
+    setSavedMovies([]);
     handleLogin();
   }
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      setValues({ 
+        name: currentUser.name,
+        email: currentUser.email,
+       })
+    }
+  }, [currentUser]);
 
   return (
     <form className="profile" name="profile" method="post" noValidate onSubmit={handleSubmit}>
@@ -39,7 +54,7 @@ function Profile({ handleLogin, updateUser, submitError }) {
           <input
               className="profile__input"
               type="text"
-              placeholder={currentUser.name}
+              placeholder="Введите имя"
               name="name"
               value={name || ""}
               onChange={handleChange}
@@ -52,20 +67,25 @@ function Profile({ handleLogin, updateUser, submitError }) {
           <input
               className="profile__input"
               type="text"
-              placeholder={currentUser.email}
+              placeholder="Введите почту"
               name="email"
               value={email || ""}
               onChange={handleChange}
             />
         </label>
 
-        <p className={`profile__submit-error ${submitError && "profile__submit-error_active"}`}>Что-то пошло не так! Попробуйте ещё раз</p>
+        <p className={`profile__submit-response 
+          ${submitError && "profile__submit-response_error"} 
+          ${submitProfileResOk && "profile__submit-response_ok"}`}>
+            {`${submitError ? "Что-то пошло не так! Попробуйте ещё раз" : ""}
+            ${submitProfileResOk ?  "Данные успешно обновлены" : ""}`}
+        </p>
 
         <div className="profile__buttons">
             <button 
-            className={`profile__button ${!isValid && "profile__button_disable"}`} 
+            className={`profile__button ${!isValid || (name === currentUser.name && email === currentUser.email) ? "profile__button_disable" : "" }`} 
             type="submit" 
-            disabled={!isValid}>
+            disabled={!isValid || (name === currentUser.name && email === currentUser.email) }>
               Редактировать
             </button>
 

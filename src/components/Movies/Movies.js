@@ -16,11 +16,16 @@ function Movies({ handleRemoveSavedMovies, savedMovies, handleLikeButton }) {
   const [nextMovies, setNextMovies] = useState(movieCounter());
   const [moviesToShow, setMoviesToShow] = useState([]);
   const [isSelectedShortMovie, setIsSelectedIsShortMovie] = useState(false);
+  // const [shortMovie, setShortMovie] = useState([]);
 
-  const onSelectShortMovie = useCallback(
-    () => setIsSelectedIsShortMovie(!isSelectedShortMovie),
-    [isSelectedShortMovie]
-  );
+  // const onSelectShortMovie = useCallback(
+  //   () => setIsSelectedIsShortMovie(!isSelectedShortMovie),
+  //   [isSelectedShortMovie]
+  // );
+  function onSelectShortMovie() {
+    setIsSelectedIsShortMovie(isSelectedShortMovie => !isSelectedShortMovie);
+    localStorage.setItem("isSelectedShortMovie", !isSelectedShortMovie);
+  }
 
 
   useEffect(() => {
@@ -39,21 +44,31 @@ function Movies({ handleRemoveSavedMovies, savedMovies, handleLikeButton }) {
     setMovies(filteredMovie);
     localStorage.setItem("filteredMovie", JSON.stringify(filteredMovie));
     localStorage.setItem("keyWord", JSON.stringify(keyWord));
+    // localStorage.setItem("isSelectedShortMovie", JSON.stringify(isSelectedShortMovie));
+    // localStorage.removeItem("filtredCheckboxMovies");
   }
 
   function handleSearchFilms() {
     setOnPreloader(true);
+    debugger
 
-    moviesApi
-    .getMovies()
-    .then((movies) => {
-      filterMovies(movies);
+    if(localStorage.getItem("allMovies")) {
+      filterMovies(JSON.parse(localStorage.allMovies));
       setMoviesToShow([]);
       setOnPreloader(false);
-    })
-    .catch((err) => {
-      setSearchMessage("Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз");
-    });
+    } else {
+      moviesApi
+      .getMovies()
+      .then((movies) => {
+        localStorage.setItem("allMovies", JSON.stringify(movies));
+        filterMovies(movies);
+        setMoviesToShow([]);
+        setOnPreloader(false);
+      })
+      .catch(() => {
+        setSearchMessage("Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз");
+      });
+    }
   }
 
   function movieCounter() {
@@ -77,7 +92,7 @@ function Movies({ handleRemoveSavedMovies, savedMovies, handleLikeButton }) {
     setNextMovies(nextMovies + movieCounter());
   };
 
-  function filterCheckboxMovies() {
+  function filterCheckboxMovies(movies) {
     const filteredMovie = movies.filter((movie) =>
     movie.duration <= 40);
 
@@ -85,21 +100,40 @@ function Movies({ handleRemoveSavedMovies, savedMovies, handleLikeButton }) {
       setSearchMessage("Ничего не найдено");
     }
     setMoviesToShow(filteredMovie);
+    // localStorage.setItem("filtredCheckboxMovies", JSON.stringify(filteredMovie));
+    localStorage.setItem("keyWord", JSON.stringify(keyWord));
+    // localStorage.setItem("isSelectedShortMovie", JSON.stringify(isSelectedShortMovie));
+    // localStorage.removeItem("filteredMovie");
   }
 
   useEffect(() => {
+    if(!(localStorage.filteredMovie)) return;
+    
     if(isSelectedShortMovie) {
-      filterCheckboxMovies()
+      filterCheckboxMovies(JSON.parse(localStorage.filteredMovie));
     } else {
-      setMoviesToShow(movies);
+      setMoviesToShow(JSON.parse(localStorage.filteredMovie));
     }
   }, [isSelectedShortMovie]);
+  // useEffect(() => {
+  //   if(localStorage.getItem("filteredMovie")) {
+  //     setMovies(JSON.parse(localStorage.filteredMovie));
+  //     setIsSelectedIsShortMovie(JSON.parse(localStorage.isSelectedShortMovie));
+  //     setKeyWord(JSON.parse(localStorage.keyWord));
+  //   }
+
+  //   if(localStorage.getItem("filtredCheckboxMovies")) {
+  //     setMovies(JSON.parse(localStorage.filtredCheckboxMovies));
+  //     setIsSelectedIsShortMovie(JSON.parse(localStorage.isSelectedShortMovie));
+  //     onSelectShortMovie();
+  //     setKeyWord(JSON.parse(localStorage.keyWord));
+  //   }
+  // }, []);
 
   useEffect(() => {
-    if(localStorage.getItem("filteredMovie")) {
-      setMovies(JSON.parse(localStorage.filteredMovie));
-      setKeyWord(JSON.parse(localStorage.keyWord));
-    }
+    if(!(localStorage.keyWord)) return;
+    setIsSelectedIsShortMovie(localStorage.getItem('isSelectedShortMovie') === 'true');
+    setKeyWord(JSON.parse(localStorage.keyWord));
   }, []);
 
   return(
@@ -108,7 +142,6 @@ function Movies({ handleRemoveSavedMovies, savedMovies, handleLikeButton }) {
          handleSearchFilms={handleSearchFilms} 
          keyWord={keyWord} 
          setKeyWord={setKeyWord}
-         filterCheckboxMovies={filterCheckboxMovies}
          onSelectShortMovie={onSelectShortMovie}
          isSelectedShortMovie={isSelectedShortMovie}
         />

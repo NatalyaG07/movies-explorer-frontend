@@ -91,8 +91,8 @@
   color: #FF4062;
 }
 
-.profile__submit-error {
-  color: #fff;
+.profile__submit-response {
+  color: #ffffff;
   margin: 0;
   margin-top: 20px;
   padding: 0;
@@ -102,8 +102,12 @@
   line-height: 12px;
 }
 
-.profile__submit-error_active {
-  color: #FF4062;
+.profile__submit-response_error{
+  color: #ff0000;
+}
+
+.profile__submit-response_ok {
+  color: #09df26;
 }
 
 @media screen and (max-width: 800px) {

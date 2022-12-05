@@ -21,6 +21,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [submitProfileError, setSubmitProfileError] = useState(false);
+  const [submitProfileResOk, setSubmitProfileResOk] = useState(false);
   const [savedMovies, setSavedMovies] = useState([]);
 
   const history = useHistory();
@@ -28,7 +29,7 @@ function App() {
 
   useEffect(() => {
     checkToken();
-  }, [history, isLoggedIn]);
+  }, [isLoggedIn]);
 
     useEffect(() => {
     if (token) {
@@ -41,7 +42,7 @@ function App() {
         console.log(err);
       });
     }
-  }, []);
+  }, [isLoggedIn]);
 
   useEffect(() => {
     if(token) {
@@ -83,6 +84,11 @@ function App() {
       .then((updateUser) => {
         setCurrentUser(updateUser);
         setSubmitProfileError(false);
+        setSubmitProfileResOk(true);
+
+        setTimeout(() => {
+          setSubmitProfileResOk(false);
+        }, 3000);
       })
       .catch((err) => {
         setSubmitProfileError(true);
@@ -104,7 +110,7 @@ function App() {
     MainApi
       .addSavedMovies(movie, token)
       .then((newSavedMovies) => {
-        setSavedMovies([newSavedMovies.movie, ...savedMovies]);
+        setSavedMovies([newSavedMovies.data, ...savedMovies]);
       })
       .catch((err) => {
         console.log(err);
@@ -158,8 +164,7 @@ function App() {
           path="/saved-movies"
           isLoggedIn={isLoggedIn}>
             <Header isLoggedIn={isLoggedIn} />
-            <SavedMovies 
-            setSavedMovies={setSavedMovies} 
+            <SavedMovies
             savedMovies={savedMovies}
             handleRemoveSavedMovies={handleRemoveSavedMovies}
             />
@@ -173,7 +178,11 @@ function App() {
             <Profile 
             handleLogin={toggleIsLoggedIn} 
             updateUser={handleUpdateUser}
-            submitError={submitProfileError}/>
+            submitError={submitProfileError}
+            isLoggedIn={isLoggedIn}
+            submitProfileResOk={submitProfileResOk}
+            setSavedMovies={setSavedMovies}
+            />
             <Footer />
           </ProtectedRoute>
   

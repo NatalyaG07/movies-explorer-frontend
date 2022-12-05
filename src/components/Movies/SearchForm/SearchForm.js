@@ -7,7 +7,6 @@ function SearchForm({
   handleSearchFilms, 
   keyWord, 
   setKeyWord, 
-  filterCheckboxMovies, 
   onSelectShortMovie, 
   isSelectedShortMovie }) {
 
@@ -48,7 +47,6 @@ function SearchForm({
       <p className="search-form__input-error">{error}</p>
       
       <FilterCheckbox 
-      filterCheckboxMovies={filterCheckboxMovies} 
       onSelectShortMovie={onSelectShortMovie}
       isSelectedShortMovie={isSelectedShortMovie}/>
     </div>
