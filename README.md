@@ -33,7 +33,11 @@
 ##### `npm run build` – запускает production сборку проекта
 
 
-## Ссылка на макет: **[макет](https://drive.google.com/drive/folders/1c-ToMGDnOVzNocbNd8shQxuc_N7huJUO?usp=sharing)**
+## Ссылки:
 
-## Ссылка на фронтенд-часть проекта: https://diploma.natalya.g.nomoredomains.icu
+Бэкэнд часть проекта: **[бэкэнд](https://github.com/NatalyaG07/movies-explorer-api)**
+
+Макет: **[макет](https://drive.google.com/drive/folders/1c-ToMGDnOVzNocbNd8shQxuc_N7huJUO?usp=sharing)**
+
+Фронтенд часть проекта: https://diploma.natalya.g.nomoredomains.icu
 
