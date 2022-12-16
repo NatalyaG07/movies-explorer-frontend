@@ -7,6 +7,10 @@
 }
 
 .movies__button {
+  display: none;
+}
+
+.movies__button_active {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -24,8 +28,17 @@
   line-height: 15px;
 }
 
-.movies__button:hover {
+.movies__button_active:hover {
   background-color: #E8E8E8;
+}
+
+.movies__search-message {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 27px;
 }
 
 @media screen and (max-width: 800px) {
@@ -34,4 +47,11 @@
     padding: 50px 10px 80px;
   }
 
+}
+
+@media screen and (max-width: 450px) {
+  .movies__search-message {
+    font-size: 15px;
+    line-height: 27px;
+  }
 }

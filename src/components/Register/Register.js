@@ -1,25 +1,42 @@
 import "./Register.css";
-import {useState} from 'react';
+
+import { useState } from "react";
+import { useHistory} from 'react-router-dom';
 
 import FormHeader from "../FormHeader/FormHeader";
 import Form from "../Form/Form";
 
-function Register() {
+import FormValidation from "../../utils/FormValidation";
+import * as MainApi from '../../utils/MainApi';
 
-  const [name, setName] = useState('Наталья');
-  const [email , setEmail] = useState('NatG@mail.ru');
-  const [password , setPassword] = useState('12345678');
+function Register({ handleLogin }) {
 
-  function handleChangeName(e) {
-    setName(e.target.value);
-  }
+  const [submitError, setSubmitError] = useState(false);
 
-  function handleChangeEmail(e) {
-    setEmail(e.target.value);
-  }
+  const FormValidationCallback = FormValidation();
+  const { email, password, name } = FormValidationCallback.values;
+  const { handleChange, errors, isValid, resetForm } = FormValidationCallback;
+
+  const history = useHistory();
 
   function handleSubmit(e) {
     e.preventDefault();
+
+    MainApi
+    .register(name, email, password)
+    .then((res) => {
+      if(res) {
+        setSubmitError(false);
+        handleLogin();
+        history.push("/movies");
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      setSubmitError(true);
+    });
+
+    resetForm();
   }
 
   return (
@@ -31,7 +48,10 @@ function Register() {
         linkText="Войти" 
         linkRout="/signin"
         name="register"
-        onSubmit={handleSubmit} >
+        onSubmit={handleSubmit}
+        submitError={submitError}
+        isValid={isValid}
+        >
           <label className="register__label">
             Имя
             <input 
@@ -40,10 +60,10 @@ function Register() {
               name="name"
               required
               placeholder="Имя"
-              value={name}
-              onChange={handleChangeName}
+              value={name || ""}
+              onChange={handleChange}
             />
-            <span className="register__error"></span>
+            <span className="register__error">{errors.name}</span>
           </label>
 
           <label className="register__label">
@@ -54,10 +74,10 @@ function Register() {
               name="email"
               required
               placeholder="Email"
-              value={email}
-              onChange={handleChangeEmail}
+              value={email || ""}
+              onChange={handleChange}
             />
-            <span className="register__error"></span>
+            <span className="register__error">{errors.email}</span>
           </label>
 
           <label className="register__label">
@@ -68,10 +88,10 @@ function Register() {
               name="password"
               required
               placeholder="пароль"
-              value={password}
-              onChange={setPassword}
+              value={password || ""}
+              onChange={handleChange}
             />
-            <span className="register__error"></span>
+            <span className="register__error">{errors.password}</span>
           </label>
 
        </Form>

@@ -1,5 +1,5 @@
 .filter-checkbox {
-  margin-top: 29px;
+  margin-top: 15px;
   display: flex;
   justify-content: center;
 }
@@ -19,17 +19,17 @@
   height: 15px;
   border-radius: 50%;
   align-self: center;
-  background-color: #2BE080;
+  background-color: rgb(0, 0, 0);
   border: 1px solid #fff;
-  margin-left: auto;
-  margin-right: 1px;
+  margin-right: auto;
+  margin-left: 1px;
   transition: all 0.5s ease;
 }
 
 .seach-short__item_is-selected {
-  background-color: rgb(0, 0, 0);
+  background-color: #2BE080;
   border: 1px solid #fff;
-  transform: translate(-17px, 0px);
+  transform: translate(17px, 0px);
   transition: all 0.5s ease;
 }
 

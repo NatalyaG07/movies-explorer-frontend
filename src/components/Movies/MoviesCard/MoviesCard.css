@@ -1,5 +1,5 @@
 .movies-card {
-  max-width: 364px;
+  width: 364px;
   box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.08);
   border-radius: 6px;
   background-color: #FDFDFD;
@@ -9,6 +9,7 @@
 
 .movies-card__img {
   width: 100%;
+  border-radius: 6px 6px 0 0;
   min-height: 203px;
   max-height: 203px;
   object-fit: cover;
@@ -74,6 +75,10 @@
 
 .movies-card__group:hover > .movies-card__like_remove { 
   opacity: 1;
+}
+
+.movies-card__link {
+  cursor: pointer;
 }
 
 @media screen and (max-width: 908px) {

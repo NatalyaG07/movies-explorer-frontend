@@ -1,20 +1,46 @@
 import "./Login.css";
 import {useState} from 'react';
+import { useHistory} from 'react-router-dom';
 
 import FormHeader from "../FormHeader/FormHeader";
 import Form from "../Form/Form";
 
-function Login() {
+import FormValidation from "../../utils/FormValidation";
+import * as MainApi from "../../utils/MainApi";
 
-  const [email , setEmail] = useState('NatG@mail.ru');
-  const [password , setPassword] = useState('12345678');
+function Login({ handleLogin }) {
 
-  function handleChangeEmail(e) {
-    setEmail(e.target.value);
-  }
+  const [submitError, setSubmitError] = useState(false);
+
+  const FormValidationCallback = FormValidation();
+  const { email, password } = FormValidationCallback.values;
+  const { handleChange, errors, isValid, resetForm } = FormValidationCallback;
+
+  const history = useHistory();
 
   function handleSubmit(e) {
     e.preventDefault();
+
+    MainApi
+    .authorize(email, password)
+    .then((data) => {
+      if(data.message) {
+        console.log(data.message);
+        setSubmitError(true);
+      }
+      
+      if(data.token) {
+        setSubmitError(false);
+        handleLogin();
+        history.push("/movies");
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      setSubmitError(true);
+    });
+
+    resetForm();
   }
 
   return (
@@ -26,7 +52,10 @@ function Login() {
         linkText="Регистрация" 
         linkRout="/signup"
         name="login"
-        onSubmit={handleSubmit} >
+        onSubmit={handleSubmit}
+        submitError={submitError}
+        isValid={isValid} 
+        >
 
           <label className="register__label">
             E-mail
@@ -36,10 +65,10 @@ function Login() {
               name="email"
               required
               placeholder="Email"
-              value={email}
-              onChange={handleChangeEmail}
+              value={email || ""}
+              onChange={handleChange}
             />
-            <span className="register__error"></span>
+            <span className="register__error">{errors.email}</span>
           </label>
 
           <label className="register__label">
@@ -50,10 +79,10 @@ function Login() {
               name="password"
               required
               placeholder="пароль"
-              value={password}
-              onChange={setPassword}
+              value={password || ""}
+              onChange={handleChange}
             />
-            <span className="register__error"></span>
+            <span className="register__error">{errors.password}</span>
           </label>
 
        </Form>

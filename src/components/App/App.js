@@ -1,7 +1,7 @@
 import "./App.css";
 
-import { useState } from "react";
-import { Route, Switch } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { Route, Switch, useHistory } from 'react-router-dom';
 
 import Header from "../Header/Header";
 import Main from '../Main/Main';
@@ -12,56 +12,187 @@ import Profile from "../Profile/Profile";
 import Register from "../Register/Register"
 import Login from "../Login/Login";
 import Page404 from "../Page404/Page404";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+
+import * as MainApi from '../../utils/MainApi';
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
+  const [submitProfileError, setSubmitProfileError] = useState(false);
+  const [submitProfileResOk, setSubmitProfileResOk] = useState(false);
+  const [savedMovies, setSavedMovies] = useState([]);
 
-  // function toggleIsLoggedIn() {
-  //   setIsLoggedIn(isLoggedIn => !isLoggedIn);
-  // }
+  const history = useHistory();
+  const token = localStorage.getItem('jwt');
 
+  useEffect(() => {
+    checkToken();
+  }, [isLoggedIn]);
+
+    useEffect(() => {
+    if (token) {
+      MainApi
+      .getSavedMovies(token)
+      .then((movies) => {
+          setSavedMovies(movies.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    }
+  }, [isLoggedIn]);
+
+  useEffect(() => {
+    if(token) {
+      MainApi
+      .getUserInfo(token)
+        .then(userData => {
+          setCurrentUser(userData);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [isLoggedIn]);
+
+  function toggleIsLoggedIn() {
+    setIsLoggedIn(isLoggedIn => !isLoggedIn);
+  };
+
+  function checkToken() {
+    if(token) {
+      MainApi.checkToken(token).then((res) => {
+        if(res) {
+          setIsLoggedIn(true);
+          history.push("/movies");
+        } else {
+          localStorage.removeItem("jwt");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    }
+  };
+
+  function handleUpdateUser({ name, email }) {
+    MainApi
+      .editProfile({
+        name,
+        email,
+      }, token )
+      .then((updateUser) => {
+        setCurrentUser(updateUser);
+        setSubmitProfileError(false);
+        setSubmitProfileResOk(true);
+
+        setTimeout(() => {
+          setSubmitProfileResOk(false);
+        }, 3000);
+      })
+      .catch((err) => {
+        setSubmitProfileError(true);
+        console.log(err);
+      });
+  };
+
+  function handleLikeButton(movie) {
+    const isLikedMovie = savedMovies.find((saved) => saved.movieId === movie.id);
+
+    if(isLikedMovie) {
+      handleRemoveSavedMovies(isLikedMovie);
+    } else {
+      handleAddSavedMovies(movie);
+    }
+  }
+
+  function handleAddSavedMovies(movie) {
+    MainApi
+      .addSavedMovies(movie, token)
+      .then((newSavedMovies) => {
+        setSavedMovies([newSavedMovies.data, ...savedMovies]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  function handleRemoveSavedMovies(movie) {
+    MainApi
+      .removeSavedMovies(movie._id, token)
+      .then(() => {
+        setSavedMovies((savedMovies) => savedMovies.filter((m) => m.movieId !== movie.movieId));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  
   return (
-    <div className="App">
 
-      <Switch>
-        <Route  exact path="/">
-          <Header isLoggedIn={isLoggedIn} />
-          <Main />
-          <Footer />
-        </Route>
-
-        <Route  exact path="/signup">
-          <Register />
-        </Route>
-
-        <Route  exact path="/signin">
-          <Login />
-        </Route>
-
-        <Route path="/movies">
-          <Header isLoggedIn={isLoggedIn} />
-          <Movies />
-          <Footer />
-        </Route>
-
-        <Route path="/saved-movies">
-          <Header isLoggedIn={isLoggedIn} />
-          <SavedMovies />
-          <Footer />
-        </Route>
-
-        <Route path="/profile">
-          <Header isLoggedIn={isLoggedIn} />
-          <Profile />
-          <Footer />
-        </Route>
-
-        <Route path="*">
-          <Page404 />
-        </Route>
-
-      </Switch>
-    </div>
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className="App">
+  
+        <Switch>
+          <Route  exact path="/">
+            <Header isLoggedIn={isLoggedIn} type="main"/>
+            <Main />
+            <Footer />
+          </Route>
+  
+          <Route  exact path="/signup">
+            <Register handleLogin={toggleIsLoggedIn} />
+          </Route>
+  
+          <Route  exact path="/signin">
+            <Login handleLogin={toggleIsLoggedIn} />
+          </Route>
+  
+          <ProtectedRoute 
+          path="/movies"
+          isLoggedIn={isLoggedIn}>
+            <Header isLoggedIn={isLoggedIn} />
+            <Movies
+            handleRemoveSavedMovies={handleRemoveSavedMovies}
+            savedMovies={savedMovies}
+            handleLikeButton={handleLikeButton}
+            />
+            <Footer />
+          </ProtectedRoute>
+  
+          <ProtectedRoute 
+          path="/saved-movies"
+          isLoggedIn={isLoggedIn}>
+            <Header isLoggedIn={isLoggedIn} />
+            <SavedMovies
+            savedMovies={savedMovies}
+            handleRemoveSavedMovies={handleRemoveSavedMovies}
+            />
+            <Footer />
+          </ProtectedRoute>
+  
+          <ProtectedRoute 
+          path="/profile"
+          isLoggedIn={isLoggedIn}>
+            <Header isLoggedIn={isLoggedIn} />
+            <Profile 
+            handleLogin={toggleIsLoggedIn} 
+            updateUser={handleUpdateUser}
+            submitError={submitProfileError}
+            isLoggedIn={isLoggedIn}
+            submitProfileResOk={submitProfileResOk}
+            setSavedMovies={setSavedMovies}
+            />
+            <Footer />
+          </ProtectedRoute>
+  
+          <Route path="*">
+            <Page404 />
+          </Route>
+  
+        </Switch>
+      </div>
+    </CurrentUserContext.Provider >
   );
 }
 

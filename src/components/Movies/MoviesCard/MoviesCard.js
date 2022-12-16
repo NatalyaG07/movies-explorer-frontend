@@ -1,23 +1,66 @@
-import React from "react";
 import "./MoviesCard.css";
 
-function MoviesCard({ nameRU, duration, image, isSaved, type }) {
+import { useEffect } from "react";
+
+function MoviesCard({ 
+  movie, 
+  nameRU, 
+  duration, 
+  image, 
+  type, 
+  handleRemoveSavedMovies, 
+  savedMovies, 
+ handleLikeButton }) {
+
+  useEffect(() => {
+      cardLikeButtonClassName();
+  }, []);
+
+  function cardLikeButtonClassName() {
+    if (type === "all-movies") {
+      const isLikedMovie = savedMovies.find((saved) => saved.movieId === movie.id);
+
+      const cardLikeButtonClassName = (
+        `movies-card__like ${isLikedMovie ? 'movies-card__like_active' : ''}`
+      );
+      return cardLikeButtonClassName;
+    }
+  }
+
+  function handleLikeButtonClick() {
+    handleLikeButton(movie);
+  }
+
+  function removeMovie() {
+    handleRemoveSavedMovies(movie);
+  }
 
   return(
     <article className="movies-card">
-      <img className="movies-card__img" src={image} alt={nameRU} />
+      <a 
+      className="movies-card__link" 
+      href={movie.trailerLink}
+      target="blank"
+      rel="noreferrer">
+        <img className="movies-card__img" src={image} alt={nameRU} />
+      </a>
 
       <div className="movies-card__info">
         <div className="movies-card__group">
           <h2 className="movies-card__title">{nameRU}</h2>
 
           {type === "saved-movies" && (
-          <button className="movies-card__like movies-card__like_remove"></button>
+          <button className="movies-card__like movies-card__like_remove"
+          onClick={removeMovie}></button>
           )}
 
 
           {type === "all-movies" && (
-          <button className={`movies-card__like ${isSaved && "movies-card__like_active"}`} type="button" aria-label="Лайк"></button>
+          <button 
+          className={cardLikeButtonClassName()}
+          type="button" 
+          aria-label="Лайк"
+          onClick={handleLikeButtonClick}></button>
           )}
         </div>
 
